@@ -2,7 +2,9 @@ package com.umbrella.hellohadoop.mr;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.slf4j.Logger;
@@ -31,6 +33,13 @@ public class HelloFS extends Configured implements Tool {
         Configuration cfg = this.getConf();
 
         FileSystem fs = FileSystem.get(cfg);
+        FSDataOutputStream fdos = fs.create(new Path("/user/hector/file1.txt"));
+        fdos.close();
+
+        log.info("createNewFile={}", fs.createNewFile(new Path("/user/hector/file2.txt")));
+
+        log.info("mkdir={}", fs.mkdirs(new Path("/user/hector/dir1")));
+
         fs.close();
 
         return 0;

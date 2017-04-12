@@ -1,5 +1,6 @@
 package com.umbrella.hellohadoop;
 
+import com.umbrella.hellohadoop.mr.HelloFS;
 import com.umbrella.hellohadoop.mr.HelloMr;
 import org.apache.hadoop.util.ProgramDriver;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ public class MainDriver {
         int exitCode = -1;
         try {
             pd.addClass("hellomr", HelloMr.class, "hellomr");
+            pd.addClass("hellofs", HelloFS.class, "hellofs");
             exitCode = pd.run(args);
         } catch (Throwable throwable) {
             log.error("main exception", throwable);
