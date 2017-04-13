@@ -75,6 +75,11 @@ public class HelloMr extends Configured implements Tool {
             for (Path p : paths) {
                 log.info("p={}", p);
             }
+
+            URI[] uris = DistributedCache.getCacheFiles(context.getConfiguration());
+            for (URI u : uris) {
+                log.info("uri={}", u);
+            }
         }
 
         @Override
