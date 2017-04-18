@@ -67,10 +67,10 @@ public class HelloMr extends Configured implements Tool {
         job.setMapperClass(HelloMapper.class);
 
         job.setInputFormatClass(TextInputFormat.class);
-        job.setOutputFormatClass(TextOutputFormat.class);
+//        job.setOutputFormatClass(TextOutputFormat.class);
 
         FileInputFormat.addInputPath(job, inpath);
-//        FileOutputFormat.setOutputPath(job, outputpath);
+        FileOutputFormat.setOutputPath(job, outputpath);
 
         job.waitForCompletion(true);
         return 0;
