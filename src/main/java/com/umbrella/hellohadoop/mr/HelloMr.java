@@ -27,6 +27,7 @@ import java.util.StringTokenizer;
  *
  * Created by xudazhou on 2017/3/20.
  * DistributedCache
+ * 多目录输出
  */
 public class HelloMr extends Configured implements Tool {
 
@@ -69,7 +70,7 @@ public class HelloMr extends Configured implements Tool {
         job.setOutputFormatClass(TextOutputFormat.class);
 
         FileInputFormat.addInputPath(job, inpath);
-        FileOutputFormat.setOutputPath(job, outputpath);
+//        FileOutputFormat.setOutputPath(job, outputpath);
 
         job.waitForCompletion(true);
         return 0;
