@@ -102,8 +102,8 @@ public class HelloMr extends Configured implements Tool {
             while (st.hasMoreTokens()) {
                 Text key1 = new Text(st.nextToken());
 //                context.write(key1, new IntWritable(1));
-                mos.write(key1, new IntWritable(1), "hello");
-                mos.write(key1, new IntWritable(2), "world");
+                mos.write(key1, new IntWritable(1), "hello/");
+                mos.write(key1, new IntWritable(2), "world/");
             }
         }
 
