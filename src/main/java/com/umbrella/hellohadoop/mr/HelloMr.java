@@ -11,9 +11,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
-import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.*;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.slf4j.Logger;
@@ -67,7 +65,11 @@ public class HelloMr extends Configured implements Tool {
         job.setMapperClass(HelloMapper.class);
 
         job.setInputFormatClass(TextInputFormat.class);
-        job.setOutputFormatClass(SequenceFileOutputFormat.class);
+
+        // 设置为 SequenceFileOutputFormat 会报错
+//        job.setOutputFormatClass(SequenceFileOutputFormat.class);
+
+        LazyOutputFormat.setOutputFormatClass(job, TextOutputFormat.class);
 
         FileInputFormat.addInputPath(job, inpath);
         FileOutputFormat.setOutputPath(job, outputpath);
