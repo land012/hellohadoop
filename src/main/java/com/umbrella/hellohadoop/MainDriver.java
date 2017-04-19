@@ -2,6 +2,7 @@ package com.umbrella.hellohadoop;
 
 import com.umbrella.hellohadoop.mr.HelloFS;
 import com.umbrella.hellohadoop.mr.HelloMr;
+import com.umbrella.hellohadoop.mr.WordCount;
 import org.apache.hadoop.util.ProgramDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ public class MainDriver {
         try {
             pd.addClass("hellomr", HelloMr.class, "hellomr");
             pd.addClass("hellofs", HelloFS.class, "hellofs");
+            pd.addClass("wordcount", WordCount.class, "wordcount");
             exitCode = pd.run(args);
         } catch (Throwable throwable) {
             log.error("main exception", throwable);
