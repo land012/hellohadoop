@@ -59,7 +59,7 @@ public class WordCount extends Configured implements Tool {
 
         job.setReducerClass(WCReducer.class);
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
 
 //        job.setInputFormatClass(TextInputFormat.class);
 
