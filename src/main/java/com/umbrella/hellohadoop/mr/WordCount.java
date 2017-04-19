@@ -52,7 +52,9 @@ public class WordCount extends Configured implements Tool {
         job.setReducerClass(WCReducer.class);
 
         //  Type mismatch in key from map: expected org.apache.hadoop.io.LongWritable, received org.apache.hadoop.io.Text
-        job.setInputFormatClass(TextInputFormat.class);
+//        job.setInputFormatClass(TextInputFormat.class);
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(IntWritable.class);
 
         FileInputFormat.addInputPath(job, inputpath);
         FileOutputFormat.setOutputPath(job, outputpath);
