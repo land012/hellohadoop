@@ -75,8 +75,8 @@ public class WordCount extends Configured implements Tool {
 
         FileInputFormat.addInputPath(job, inputpath);
         FileOutputFormat.setOutputPath(job, outputpath);
-//        FileOutputFormat.setCompressOutput(job, true);
-//        FileOutputFormat.setOutputCompressorClass(job, GzipCodec.class);
+        FileOutputFormat.setCompressOutput(job, true);
+        FileOutputFormat.setOutputCompressorClass(job, GzipCodec.class);
 
         return job.waitForCompletion(true) ? 0 : 1;
     }
