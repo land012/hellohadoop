@@ -4,6 +4,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -79,14 +80,15 @@ public class WordCount extends Configured implements Tool {
         }
     }
 
-    static class WCReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+    static class WCReducer extends Reducer<Text, IntWritable, Text, BytesWritable> {
         @Override
         protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             int sum = 0;
             for (IntWritable i : values) {
                 sum += i.get();
             }
-            context.write(key, new IntWritable(sum));
+            String v = String.valueOf(sum);
+            context.write(key, new BytesWritable(v.getBytes("utf-8")));
         }
     }
 }
