@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /**
@@ -31,11 +32,17 @@ public class WordCount extends Configured implements Tool {
     private static Logger log = LoggerFactory.getLogger(WordCount.class);
 
     public static void main(String[] args) throws Exception {
-        ToolRunner.run(new Configuration(), new WordCount(), args);
+        log.info("main args={}", Arrays.toString(args));
+
+        Configuration conf = new Configuration();
+//        String[] remainArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
+        ToolRunner.run(conf, new WordCount(), args);
     }
 
     @Override
     public int run(String[] args) throws Exception {
+        log.info("run args={}", Arrays.toString(args));
+
         Configuration conf = this.getConf();
 
         Path inputpath = new Path(args[0]);
@@ -68,8 +75,8 @@ public class WordCount extends Configured implements Tool {
 
         FileInputFormat.addInputPath(job, inputpath);
         FileOutputFormat.setOutputPath(job, outputpath);
-        FileOutputFormat.setCompressOutput(job, true);
-        FileOutputFormat.setOutputCompressorClass(job, GzipCodec.class);
+//        FileOutputFormat.setCompressOutput(job, true);
+//        FileOutputFormat.setOutputCompressorClass(job, GzipCodec.class);
 
         return job.waitForCompletion(true) ? 0 : 1;
     }
