@@ -11,7 +11,6 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.hadoop.util.Tool;
@@ -51,16 +50,18 @@ public class WordCount extends Configured implements Tool {
         job.setJarByClass(WordCount.class);
 
         job.setMapperClass(WCMapper.class);
-        job.setReducerClass(WCReducer.class);
-
-
-//        job.setInputFormatClass(TextInputFormat.class);
         /*
          * 不配置则会报错
          * Type mismatch in key from map: expected org.apache.hadoop.io.LongWritable, received org.apache.hadoop.io.Text
          */
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
+
+        job.setReducerClass(WCReducer.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(Text.class);
+
+//        job.setInputFormatClass(TextInputFormat.class);
 
         job.setOutputFormatClass(SequenceFileOutputFormat.class);
 
@@ -80,15 +81,17 @@ public class WordCount extends Configured implements Tool {
         }
     }
 
-    static class WCReducer extends Reducer<Text, IntWritable, Text, BytesWritable> {
+    static class WCReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
         @Override
         protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             int sum = 0;
             for (IntWritable i : values) {
                 sum += i.get();
             }
-            String v = String.valueOf(sum);
-            context.write(key, new BytesWritable(v.getBytes("utf-8")));
+            context.write(key, new IntWritable(sum));
+
+//            String v = String.valueOf(sum);
+//            context.write(key, new BytesWritable(v.getBytes("utf-8")));
         }
     }
 }
