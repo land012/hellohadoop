@@ -48,10 +48,18 @@ public class WordCount extends Configured implements Tool {
         Path outputpath = new Path(args[1]);
         conf.set("output1", args[2]);
         conf.set("output2", args[3]);
+        Path outputpath1 = new Path(args[2]);
+        Path outputpath2 = new Path(args[3]);
 
         FileSystem fs = FileSystem.get(conf);
         if (fs.exists(outputpath)) {
             fs.delete(outputpath, true);
+        }
+        if (fs.exists(outputpath1)) {
+            fs.delete(outputpath1, true);
+        }
+        if (fs.exists(outputpath2)) {
+            fs.delete(outputpath2, true);
         }
         fs.close();
 
