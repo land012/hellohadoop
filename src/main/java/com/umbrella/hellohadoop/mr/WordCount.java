@@ -119,7 +119,7 @@ public class WordCount extends Configured implements Tool {
             for (IntWritable i : values) {
                 sum += i.get();
             }
-            context.write(key, new IntWritable(sum));
+//            context.write(key, new IntWritable(sum));
 
             mos.write("wc1", key, new IntWritable(sum), output1 + "/");
             mos.write("wc2", key, new IntWritable(sum*2), output2 + "/");
