@@ -80,7 +80,7 @@ public class WordCount extends Configured implements Tool {
 
 //        job.setInputFormatClass(TextInputFormat.class);
 
-        job.setOutputFormatClass(LazyOutputFormat.class);
+        job.setOutputFormatClass(TextOutputFormat.class);
 
         FileInputFormat.addInputPath(job, inputpath);
         FileOutputFormat.setOutputPath(job, outputpath);
