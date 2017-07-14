@@ -14,6 +14,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.slf4j.Logger;
@@ -81,6 +82,9 @@ public class WordCount extends Configured implements Tool {
         FileOutputFormat.setCompressOutput(job, true);
         FileOutputFormat.setOutputCompressorClass(job, GzipCodec.class);
 
+        MultipleOutputs.addNamedOutput(job, "wc1", TextOutputFormat.class, Text.class, IntWritable.class);
+        MultipleOutputs.addNamedOutput(job, "wc2", TextOutputFormat.class, Text.class, IntWritable.class);
+
         return job.waitForCompletion(true) ? 0 : 1;
     }
 
@@ -106,6 +110,7 @@ public class WordCount extends Configured implements Tool {
             Configuration cfg = context.getConfiguration();
             output1 = cfg.get("output1");
             output2 = cfg.get("output2");
+            log.info("output1={}, output2={}", output1, output2);
         }
 
         @Override
