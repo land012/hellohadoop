@@ -79,8 +79,8 @@ public class WordCount extends Configured implements Tool {
 
         FileInputFormat.addInputPath(job, inputpath);
         FileOutputFormat.setOutputPath(job, outputpath);
-        FileOutputFormat.setCompressOutput(job, true);
-        FileOutputFormat.setOutputCompressorClass(job, GzipCodec.class);
+//        FileOutputFormat.setCompressOutput(job, true);
+//        FileOutputFormat.setOutputCompressorClass(job, GzipCodec.class);
 
         MultipleOutputs.addNamedOutput(job, "wc1", TextOutputFormat.class, Text.class, IntWritable.class);
         MultipleOutputs.addNamedOutput(job, "wc2", TextOutputFormat.class, Text.class, IntWritable.class);
@@ -121,8 +121,8 @@ public class WordCount extends Configured implements Tool {
             }
             context.write(key, new IntWritable(sum));
 
-            mos.write("wc1", key, new IntWritable(sum), output1);
-            mos.write("wc2", key, new IntWritable(sum*2), output2);
+            mos.write("wc1", key, new IntWritable(sum), output1 + "/");
+            mos.write("wc2", key, new IntWritable(sum*2), output2 + "/");
 
 //            String v = String.valueOf(sum);
 //            context.write(key, new BytesWritable(v.getBytes("utf-8")));
